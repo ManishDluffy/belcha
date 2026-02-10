@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Shake to Play Sound</title>
+  <title>Shake Sound</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Shake Your Phone 📱</h2>
-  <button onclick="enableMotion()">Enable Motion</button>
 
-  <audio id="sound" src="audio.wav"></audio>
+  <div class="container">
+    <div class="emoji">📱</div>
+
+    <!-- LOGO -->
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <h1>Shake to Play Sound</h1>
+    <p>Tap the button and shake your phone</p>
+
+    <button onclick="startMotion()">Enable Motion</button>
+
+    <audio id="sound" src="sound.wav"></audio>
+  </div>
 
   <script src="script.js"></script>
 </body>
