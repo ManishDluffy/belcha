@@ -11,33 +11,17 @@
   <div class="container">
     <div class="emoji">📱</div>
 
-    <img src="logo.png" alt="Logo" class="logo">
+    <!-- LOGO -->
+    <img src="logo.jpg" alt="Logo" class="logo">
 
     <h1>Shake to Play Sound</h1>
     <p>Tap the button and shake your phone</p>
 
-    <!-- IMPORTANT BUTTON -->
-    <button id="enableBtn">Enable Motion</button>
+    <button onclick="startMotion()">Enable Motion</button>
 
-    <!-- TEST BUTTON (temporary) -->
-    <button onclick="document.getElementById('sound').play()"
-            style="margin-top:10px;background:#fff;">
-      Test Sound
-    </button>
-
-    <audio id="sound" src="sound.wav"></audio>
+    <audio id="sound" src="audio.wav"></audio>
   </div>
 
   <script src="script.js"></script>
-
-  <!-- INLINE CHECK -->
-  <script>
-    document.getElementById("enableBtn").addEventListener("click", () => {
-      alert("Button works ✅");
-      startMotion();
-    });
-  </script>
-
 </body>
 </html>
-
