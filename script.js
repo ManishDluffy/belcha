@@ -1,33 +1,49 @@
 let lastX = 0, lastY = 0, lastZ = 0;
 let threshold = 15;
-let sound = document.getElementById("sound");
+let lastPlayTime = 0;
 
-function enableMotion() {
-  if (typeof DeviceMotionEvent.requestPermission === "function") {
-    DeviceMotionEvent.requestPermission()
-      .then(permission => {
-        if (permission === "granted") {
-          window.addEventListener("devicemotion", handleMotion);
-        }
-      });
+function startMotion() {
+  // iOS permission (won’t hurt Android)
+  if (
+    typeof DeviceMotionEvent !== "undefined" &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
+    DeviceMotionEvent.requestPermission().then(permission => {
+      if (permission === "granted") {
+        window.addEventListener("devicemotion", detectShake);
+        alert("Motion enabled! Now shake 📱");
+      } else {
+        alert("Motion permission denied");
+      }
+    });
+  } else if (typeof DeviceMotionEvent !== "undefined") {
+    window.addEventListener("devicemotion", detectShake);
+    alert("Motion enabled! Now shake 📱");
   } else {
-    window.addEventListener("devicemotion", handleMotion);
+    alert("Motion sensor not supported");
   }
 }
 
-function handleMotion(event) {
-  let x = event.accelerationIncludingGravity.x;
-  let y = event.accelerationIncludingGravity.y;
-  let z = event.accelerationIncludingGravity.z;
+function detectShake(event) {
+  let acc = event.accelerationIncludingGravity;
+  if (!acc) return;
 
-  let delta =
+  let x = acc.x || 0;
+  let y = acc.y || 0;
+  let z = acc.z || 0;
+
+  let change =
     Math.abs(x - lastX) +
     Math.abs(y - lastY) +
     Math.abs(z - lastZ);
 
-  if (delta > threshold) {
+  let now = Date.now();
+
+  if (change > threshold && now - lastPlayTime > 1000) {
+    let sound = document.getElementById("sound");
     sound.currentTime = 0;
     sound.play();
+    lastPlayTime = now;
   }
 
   lastX = x;
